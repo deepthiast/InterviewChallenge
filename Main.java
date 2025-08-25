@@ -4,8 +4,8 @@ import static provided.TestHelper.*;
 class Main {
 
   static int getLength(Database db,
-      String id1, int location1,
-      String id2, int location2) {
+                       String id1, int location1,
+                       String id2, int location2) {
 
     // TODO: write your code here
 

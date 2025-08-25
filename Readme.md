@@ -88,6 +88,13 @@ Road:
      */
     public Optional<Road> getById(String id);
 
+    /**
+     * Checks if a node with the given id exists.
+     * 
+     * @param id id of the node to check
+     *
+     * @return true if the node exists, otherwise false.
+     */
     public boolean exists(String id);
 
     /**
@@ -105,7 +112,7 @@ Road:
      * Note: the previous id has to exist and be a neighbor to the current road
      *
      * @param road   the road to get the neighbor for
-     * @param prevId id of the neighbor to the road nood to move opposite from
+     * @param prevId id of the neighbor to the road node to move opposite from
      *
      * @return optional road
      */
