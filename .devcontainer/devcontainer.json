@@ -20,8 +20,7 @@
 		"vscode": {
 			"settings": {},
 			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"Oracle.oracle-java"
+				"streetsidesoftware.code-spell-checker"
 			]
 		}
 	}
