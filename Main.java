@@ -1,14 +1,67 @@
 import provided.Database;
 import static provided.TestHelper.*;
+import provided.Road;
+
+import java.util.*;
+
 
 class Main {
 
   static int getLength(Database db,
                        String id1, int location1,
                        String id2, int location2) {
+    
 
-    // TODO: write your code here
+    Optional<Road> startOpt = db.getById(id1);
+    Optional<Road> endOpt = db.getById(id2);
+    
+    if(startOpt.isEmpty() || endOpt.isEmpty()){
+      return -1;
+    }
 
+    Road start = startOpt.get();
+    Road end = endOpt.get();
+
+    if(start.getLength()< location1 || end.getLength()<location2){
+      return -1;
+    }
+    // edge Case
+    if(start.getId().equals(end.getId())){
+      return Math.abs(location2- location1);
+    }
+
+   
+    Set<String> visited = new HashSet<>();
+    return dfs(db, start, end, location1, location2, visited, 0);
+  }
+
+  private static int dfs(Database db , Road curr, Road target, int currLoc , int targetLoc, Set<String> visited, int dist){
+    if(curr.getId().equals(target.getId())){
+      return dist + Math.abs(targetLoc-currLoc);
+    }
+    visited.add(curr.getId());
+    for(String conn: new String[] {"Begin", "End"}){
+      Optional<String> neighborId = curr.getConnection(conn);
+      if(neighborId.isPresent() && !visited.contains(neighborId.get())){
+        Optional<Road> neighbor = db.getById(neighborId.get());
+        if(neighbor.isPresent()){
+          int result=0;
+          if(conn == "End"){
+            int distToNeigh = curr.getLength()-currLoc;
+            result = dfs(db, neighbor.get(), target, 0, targetLoc, visited, dist +distToNeigh);
+
+          } 
+          if(conn =="Begin"){
+            int distToNeigh = currLoc;
+            result = dfs(db, neighbor.get(), target, neighbor.get().getLength(), targetLoc, visited, dist +distToNeigh);
+
+          }
+          if(result>=0){
+            return result;
+          }
+        }
+      }
+    }
     return -1;
   }
 
